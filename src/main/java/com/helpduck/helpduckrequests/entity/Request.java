@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Document()
-public class Request extends RepresentationModel<Request> {
+public class Request {
 
 	@Id
 	private String id;
@@ -30,11 +30,5 @@ public class Request extends RepresentationModel<Request> {
 		this.title = title;
 		this.description = description;
 		this.registrationDate = registrationDate;
-	}
-
-	@javax.persistence.Transient
-	@Override
-	public Links getLinks() {
-		return super.getLinks();
 	}
 }

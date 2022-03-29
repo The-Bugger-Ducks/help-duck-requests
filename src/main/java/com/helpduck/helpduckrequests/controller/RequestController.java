@@ -1,8 +1,10 @@
 package com.helpduck.helpduckrequests.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.codecs.jsr310.LocalDateTimeCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,6 @@ import com.helpduck.helpduckrequests.entity.Request;
 import com.helpduck.helpduckrequests.model.RequestLinkAdder;
 import com.helpduck.helpduckrequests.model.RequestUpdater;
 import com.helpduck.helpduckrequests.repository.RequestRepository;
-import com.helpduck.helpduckrequests.service.RequestService;
 
 @RestController
 @RequestMapping("/requests")
@@ -30,18 +31,14 @@ public class RequestController {
 	@Autowired
 	private RequestLinkAdder linkAdder;
 
-	@Autowired
-	private RequestService requestService;
-
 	MongoTemplate mongoTemplate;
 
 	 @GetMapping("/")
 	 public ResponseEntity<List<Request>> getRequests() {
-	 	List<Request> requests = requestService.getAllRequests();
+	 	List<Request> requests = repository.findAll();
 	 	ResponseEntity<List<Request>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	 	if (!requests.isEmpty()) {
-	 		linkAdder.addLink(requests);
 	 		response = new ResponseEntity<List<Request>>(requests, HttpStatus.FOUND);
 	 	}
 	 	return response;
@@ -61,14 +58,16 @@ public class RequestController {
 	 }
 
 	@PostMapping("/create")
-	public ResponseEntity<HttpStatus> createRequest(@RequestBody Request request) {
+	public ResponseEntity<Request> createRequest(@RequestBody Request request) {
 		HttpStatus status = HttpStatus.CONFLICT;
 
 		if (request.getId() == null) {
-			repository.insert(request);
+			request.setRegistrationDate(LocalDateTime.now());
+			Request requestInserted = repository.insert(request);
 			status = HttpStatus.CREATED;
+			return new ResponseEntity<Request>(requestInserted, status);
 		}
-		return new ResponseEntity<HttpStatus>(status);
+		return new ResponseEntity<Request>(status);
 	}
 
 	 @PutMapping("/update")
