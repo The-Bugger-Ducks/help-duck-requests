@@ -15,7 +15,7 @@ public class RequestLinkAdder implements LinkAdder<Request> {
 	@Override
 	public void addLink(List<Request> requests) {
 		for (Request request : requests) {
-			long id = request.getId();
+			String id = request.getId();
 			Link linkToItself = WebMvcLinkBuilder
 					.linkTo(WebMvcLinkBuilder
 							.methodOn(RequestController.class)
