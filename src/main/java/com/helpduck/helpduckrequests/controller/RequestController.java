@@ -4,8 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.codecs.jsr310.LocalDateTimeCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,39 +18,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.helpduck.helpduckrequests.entity.Request;
+import com.helpduck.helpduckrequests.model.RequestLinkAdder;
 import com.helpduck.helpduckrequests.model.RequestUpdater;
+import com.helpduck.helpduckrequests.model.hateoas.RequestHateoas;
 import com.helpduck.helpduckrequests.repository.RequestRepository;
+import com.helpduck.helpduckrequests.service.RequestService;
 
 @RestController
 @RequestMapping("/requests")
 public class RequestController {
 	@Autowired
 	private RequestRepository repository;
+	@Autowired
+  private RequestService service;
+	@Autowired
+	RequestLinkAdder linkAdder;
 
 	MongoTemplate mongoTemplate;
 
 	@GetMapping("/")
-	public ResponseEntity<List<Request>> getRequests() {
-		List<Request> requests = repository.findAll();
-		ResponseEntity<List<Request>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-		if (!requests.isEmpty()) {
-			response = new ResponseEntity<List<Request>>(requests, HttpStatus.FOUND);
+	public ResponseEntity<Page<RequestHateoas>> getRequests(Pageable pageable) {
+		Page<RequestHateoas> pageRequestHateoas = service.findAll(pageable);
+		ResponseEntity<Page<RequestHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if (!pageRequestHateoas.isEmpty()) {
+			linkAdder.addLink(pageRequestHateoas);
+			response = new ResponseEntity<Page<RequestHateoas>>(pageRequestHateoas, HttpStatus.FOUND);
 		}
 		return response;
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Request> getRequest(@PathVariable String id) {
-		ResponseEntity<Request> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<RequestHateoas> getRequest(@PathVariable String id) {
+		ResponseEntity<RequestHateoas> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		RequestHateoas requestHateoas = service.findById(id);
 
-		Optional<Request> requestOptional = repository.findById(id);
-		if (!requestOptional.isEmpty()) {
-			Request request = requestOptional.get();
-			response = new ResponseEntity<Request>(request, HttpStatus.FOUND);
+		if (requestHateoas != null) {
+			linkAdder.addLink(requestHateoas);
+			response = new ResponseEntity<RequestHateoas>(requestHateoas, HttpStatus.FOUND);
 		}
 		return response;
 	}
