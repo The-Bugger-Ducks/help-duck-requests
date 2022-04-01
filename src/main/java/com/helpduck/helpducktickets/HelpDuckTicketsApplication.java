@@ -1,12 +1,12 @@
-package com.helpduck.helpduckrequests;
+package com.helpduck.helpducktickets;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HelpDuckRequestsApplication {
+public class HelpDuckTicketsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelpDuckRequestsApplication.class, args);
+		SpringApplication.run(HelpDuckTicketsApplication.class, args);
 	}
 }

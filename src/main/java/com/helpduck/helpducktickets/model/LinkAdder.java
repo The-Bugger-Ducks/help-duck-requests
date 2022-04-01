@@ -1,6 +1,4 @@
-package com.helpduck.helpduckrequests.model;
-
-import java.util.List;
+package com.helpduck.helpducktickets.model;
 
 import org.springframework.data.domain.Page;
 

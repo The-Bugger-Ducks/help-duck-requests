@@ -1,4 +1,4 @@
-package com.helpduck.helpduckrequests.config;
+package com.helpduck.helpducktickets.config;
 
 import java.util.Arrays;
 

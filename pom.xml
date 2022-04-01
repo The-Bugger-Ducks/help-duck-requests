@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.helpduck</groupId>
-	<artifactId>helpduckrequests</artifactId>
+	<artifactId>helpducktickets</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>HelpDuckRequests</name>
-	<description>Microservice for 'requests' CRUD</description>
+	<name>HelpDuckTickets</name>
+	<description>Microservice for 'tickets' CRUD</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

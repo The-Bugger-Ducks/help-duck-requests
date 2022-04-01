@@ -1,10 +1,10 @@
-package com.helpduck.helpduckrequests;
+package com.helpduck.helpducktickets;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HelpDuckRequestsApplicationTests {
+class HelpDuckTicketsApplicationTests {
 
 	@Test
 	void contextLoads() {
