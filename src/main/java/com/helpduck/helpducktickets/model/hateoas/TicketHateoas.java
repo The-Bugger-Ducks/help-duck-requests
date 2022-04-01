@@ -1,6 +1,7 @@
 package com.helpduck.helpducktickets.model.hateoas;
 
 import com.helpduck.helpducktickets.entity.Ticket;
+import com.helpduck.helpducktickets.entity.User;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 
@@ -21,8 +22,8 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private String id;
 	private String title;
 	private String description;
-	private String user;
-	private String support;
+	private User user;
+	private User support;
 	private List<String> tags;
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;

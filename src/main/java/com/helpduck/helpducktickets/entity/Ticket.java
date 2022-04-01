@@ -10,11 +10,9 @@ import com.helpduck.helpducktickets.enums.StatusEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Document()
 public class Ticket {
 
@@ -22,8 +20,8 @@ public class Ticket {
 	private String id;
 	private String title;
 	private String description;
-	private String user;
-	private String support;
+	private User user;
+	private User support;
 	private List<String> tags;
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;
@@ -35,8 +33,8 @@ public class Ticket {
 			String id,
 			String title,
 			String description,
-			String user,
-			String support,
+			User user,
+			User support,
 			List<String> tags,
 			PriorityLevelEnum priorityLevel,
 			StatusEnum status,
