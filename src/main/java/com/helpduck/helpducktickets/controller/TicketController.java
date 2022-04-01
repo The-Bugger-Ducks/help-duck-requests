@@ -1,6 +1,7 @@
 package com.helpduck.helpducktickets.controller;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -39,8 +40,8 @@ public class TicketController {
 
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
-		Page<TicketHateoas> pageTicketHateoas = service.findAll(pageable);
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Page<TicketHateoas> pageTicketHateoas = service.findAll(pageable);
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
 			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
@@ -52,7 +53,6 @@ public class TicketController {
 	public ResponseEntity<TicketHateoas> getTicket(@PathVariable String id) {
 		ResponseEntity<TicketHateoas> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		TicketHateoas ticketHateoas = service.findById(id);
-
 		if (ticketHateoas != null) {
 			linkAdder.addLink(ticketHateoas);
 			response = new ResponseEntity<TicketHateoas>(ticketHateoas, HttpStatus.FOUND);
@@ -66,7 +66,7 @@ public class TicketController {
 
 		if (ticket.getId() == null) {
 			ticket.setCreatedAt(Calendar.getInstance());
-			ticket.setUpdatedAt(Calendar.getInstance());
+			ticket.setUpdatedAt(Calendar.getInstance(new Locale("pt-BR")));
 			ticket.setReserved(false);
 			Ticket ticketInserted = repository.insert(ticket);
 			status = HttpStatus.CREATED;
@@ -77,8 +77,8 @@ public class TicketController {
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateTicket(@RequestBody Ticket updatedTicket) {
-		Optional<Ticket> ticketOptional = repository.findById(updatedTicket.getId());
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		Optional<Ticket> ticketOptional = repository.findById(updatedTicket.getId());
 
 		if (!ticketOptional.isEmpty()) {
 			Ticket ticket = ticketOptional.get();
@@ -90,13 +90,13 @@ public class TicketController {
 		return new ResponseEntity<HttpStatus>(status);
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteTicket(@RequestBody Ticket ticketToDelete) {
-		Optional<Ticket> ticketOptional = repository.findById(ticketToDelete.getId());
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteTicket(@PathVariable String id) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		Optional<Ticket> ticketOptional = repository.findById(id);
 
 		if (!ticketOptional.isEmpty()) {
-			repository.deleteById(ticketToDelete.getId());
+			repository.deleteById(id);
 			status = HttpStatus.OK;
 		}
 		return new ResponseEntity<HttpStatus>(status);
