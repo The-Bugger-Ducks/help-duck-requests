@@ -1,6 +1,6 @@
 package com.helpduck.helpducktickets.model;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import com.helpduck.helpducktickets.entity.Ticket;
 
@@ -17,6 +17,6 @@ public class TicketUpdater {
 		}
 		
 		
-		ticket.setUpdatedAt(LocalDateTime.now());
+		ticket.setUpdatedAt(Calendar.getInstance());
 	}
 }

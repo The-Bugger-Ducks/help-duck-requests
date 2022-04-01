@@ -1,6 +1,6 @@
 package com.helpduck.helpducktickets.controller;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -65,8 +65,8 @@ public class TicketController {
 		HttpStatus status = HttpStatus.CONFLICT;
 
 		if (ticket.getId() == null) {
-			ticket.setCreatedAt(LocalDateTime.now());
-			ticket.setUpdatedAt(LocalDateTime.now());
+			ticket.setCreatedAt(Calendar.getInstance());
+			ticket.setUpdatedAt(Calendar.getInstance());
 			ticket.setReserved(false);
 			Ticket ticketInserted = repository.insert(ticket);
 			status = HttpStatus.CREATED;

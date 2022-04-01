@@ -1,7 +1,11 @@
 package com.helpduck.helpducktickets.entity;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
+
+import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
+import com.helpduck.helpducktickets.enums.StatusEnum;
+
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,35 +22,32 @@ public class Ticket {
 	private String id;
 	private String title;
 	private String description;
-	private String subject;
-	private String ownerUserId;
-	private String supportId;
+	private String user;
+	private String support;
 	private List<String> tags;
-	private String priorityLevel;
-	private String status;
+	private PriorityLevelEnum priorityLevel;
+	private StatusEnum status;
 	private Boolean reserved;    
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private Calendar createdAt;
+	private Calendar updatedAt;
 
 	public Ticket(
 			String id,
 			String title,
 			String description,
-			String subject,
-			String ownerUserId,
-			String supportId,
+			String user,
+			String support,
 			List<String> tags,
-			String priorityLevel,
-			String status,
+			PriorityLevelEnum priorityLevel,
+			StatusEnum status,
 			Boolean reserved,    
-			LocalDateTime createdAt,
-			LocalDateTime updatedAt) {
+			Calendar createdAt,
+			Calendar updatedAt) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.subject = subject;
-		this.ownerUserId = ownerUserId;
-		this.supportId = supportId;
+		this.user = user;
+		this.support = support;
 		this.tags = tags;
 		this.priorityLevel = priorityLevel;
 		this.status = status;
