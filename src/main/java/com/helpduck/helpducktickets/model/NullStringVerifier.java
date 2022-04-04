@@ -1,4 +1,4 @@
-package com.helpduck.helpduckrequests.model;
+package com.helpduck.helpducktickets.model;
 
 public class NullStringVerifier {
 
