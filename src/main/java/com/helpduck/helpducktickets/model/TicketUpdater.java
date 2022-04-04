@@ -1,6 +1,7 @@
 package com.helpduck.helpducktickets.model;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import com.helpduck.helpducktickets.entity.Ticket;
 
@@ -17,6 +18,6 @@ public class TicketUpdater {
 		}
 		
 		
-		ticket.setUpdatedAt(Calendar.getInstance());
+		ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 	}
 }

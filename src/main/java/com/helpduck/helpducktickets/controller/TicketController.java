@@ -1,7 +1,7 @@
 package com.helpduck.helpducktickets.controller;
 
-import java.util.Calendar;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -65,9 +65,8 @@ public class TicketController {
 		HttpStatus status = HttpStatus.CONFLICT;
 
 		if (ticket.getId() == null) {
-			ticket.setCreatedAt(Calendar.getInstance());
-			ticket.setUpdatedAt(Calendar.getInstance(new Locale("pt-BR")));
-			ticket.setReserved(false);
+			ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+			ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 			Ticket ticketInserted = repository.insert(ticket);
 			status = HttpStatus.CREATED;
 			return new ResponseEntity<Ticket>(ticketInserted, status);

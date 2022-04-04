@@ -11,7 +11,7 @@ import org.springframework.hateoas.RepresentationModel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,8 +28,8 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;
 	private Boolean reserved;    
-	private Calendar createdAt;
-	private Calendar updatedAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 
 	public TicketHateoas() {
 	}
@@ -43,7 +43,6 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 		tags = ticket.getTags();
 		priorityLevel = ticket.getPriorityLevel();
 		status = ticket.getStatus();
-		reserved = ticket.getReserved();
     createdAt = ticket.getCreatedAt();
 		updatedAt = ticket.getUpdatedAt();
   }
