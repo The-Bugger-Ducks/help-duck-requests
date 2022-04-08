@@ -1,5 +1,11 @@
 package com.helpduck.helpducktickets.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
 import com.helpduck.helpducktickets.repository.TicketRepository;
@@ -24,9 +30,30 @@ public class TicketService {
   }
 
   @Transactional(readOnly = true)
-  public TicketHateoas findById(String id) {
-    Ticket ticket = repository.findById(id).get();
-    TicketHateoas ticketHateoas= new TicketHateoas(ticket);
+  public Ticket findById(String id) {
+    Optional<Ticket> ticketOptional = repository.findById(id);
+    if (ticketOptional.isEmpty()) {
+      return null;
+    }
+    Ticket ticket = ticketOptional.get();
+    return ticket;
+  }
+
+  @Transactional(readOnly = true)
+  public TicketHateoas findByIdHateoas(String id) {
+    Optional<Ticket> ticket = repository.findById(id);
+    if (ticket.isEmpty()) {
+      return null;
+    }
+    TicketHateoas ticketHateoas = new TicketHateoas(ticket.get());
     return ticketHateoas;
+  }
+
+  public Ticket create(Ticket ticket) {
+    ticket.setComments(new ArrayList<Comment>());
+    ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    Ticket ticketInserted = repository.insert(ticket);
+    return ticketInserted;
   }
 }

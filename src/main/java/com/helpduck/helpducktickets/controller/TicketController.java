@@ -1,13 +1,11 @@
 package com.helpduck.helpducktickets.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
-import com.helpduck.helpducktickets.model.TicketLinkAdder;
-import com.helpduck.helpducktickets.model.TicketUpdater;
+import com.helpduck.helpducktickets.model.tickets.TicketLinkAdder;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
+import com.helpduck.helpducktickets.model.tickets.TicketUpdater;
 import com.helpduck.helpducktickets.repository.TicketRepository;
 import com.helpduck.helpducktickets.service.TicketService;
 
@@ -32,7 +30,7 @@ public class TicketController {
 	@Autowired
 	private TicketRepository repository;
 	@Autowired
-  private TicketService service;
+	private TicketService service;
 	@Autowired
 	TicketLinkAdder linkAdder;
 
@@ -40,6 +38,7 @@ public class TicketController {
 
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
+
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		Page<TicketHateoas> pageTicketHateoas = service.findAll(pageable);
 		if (!pageTicketHateoas.isEmpty()) {
@@ -49,33 +48,32 @@ public class TicketController {
 		return response;
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<TicketHateoas> getTicket(@PathVariable String id) {
-		ResponseEntity<TicketHateoas> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		TicketHateoas ticketHateoas = service.findById(id);
-		if (ticketHateoas != null) {
-			linkAdder.addLink(ticketHateoas);
-			response = new ResponseEntity<TicketHateoas>(ticketHateoas, HttpStatus.FOUND);
+	@GetMapping("/{ticketId}")
+	public ResponseEntity<TicketHateoas> getTicket(@PathVariable String ticketId) {
+
+		TicketHateoas ticketHateoas = service.findByIdHateoas(ticketId);
+		if (ticketHateoas == null) {
+			new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return response;
+
+		linkAdder.addLink(ticketHateoas);
+		return new ResponseEntity<TicketHateoas>(ticketHateoas, HttpStatus.FOUND);
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
-		HttpStatus status = HttpStatus.CONFLICT;
 
-		if (ticket.getId() == null) {
-			ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-			ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
-			Ticket ticketInserted = repository.insert(ticket);
-			status = HttpStatus.CREATED;
-			return new ResponseEntity<Ticket>(ticketInserted, status);
+		if (ticket.getId() != null) {
+			return new ResponseEntity<Ticket>(HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Ticket>(status);
+
+		Ticket ticketInserted = service.create(ticket);
+		return new ResponseEntity<Ticket>(ticketInserted, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateTicket(@RequestBody Ticket updatedTicket) {
+
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		Optional<Ticket> ticketOptional = repository.findById(updatedTicket.getId());
 
@@ -89,13 +87,14 @@ public class TicketController {
 		return new ResponseEntity<HttpStatus>(status);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<HttpStatus> deleteTicket(@PathVariable String id) {
+	@DeleteMapping("/delete/{ticketId}")
+	public ResponseEntity<HttpStatus> deleteTicket(@PathVariable String ticketId) {
+
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		Optional<Ticket> ticketOptional = repository.findById(id);
+		Optional<Ticket> ticketOptional = repository.findById(ticketId);
 
 		if (!ticketOptional.isEmpty()) {
-			repository.deleteById(id);
+			repository.deleteById(ticketId);
 			status = HttpStatus.OK;
 		}
 		return new ResponseEntity<HttpStatus>(status);
