@@ -50,7 +50,7 @@ public class HelpUserController {
   }
 
   @PutMapping("/updateComment/{ticketId}")
-  public ResponseEntity<Ticket> awswerTicketComment(@PathVariable String ticketId, @RequestBody Comment newComment) {
+  public ResponseEntity<Ticket> answerTicketComment(@PathVariable String ticketId, @RequestBody Comment newComment) {
 
     Ticket ticket = service.findById(ticketId);
     if (ticket == null) {

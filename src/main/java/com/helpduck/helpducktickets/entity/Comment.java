@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Comment {
-  User commentOwner;
+  User ownerComment;
   String comment;
 }
