@@ -6,7 +6,6 @@ import java.util.List;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,11 +19,15 @@ public class Ticket {
 	private String id;
 	private String title;
 	private String description;
-	private User user;
-	private User support;
 	private List<String> tags;
 	private PriorityLevelEnum priorityLevel;
-	private StatusEnum status;  
+	private StatusEnum status;
+
+	private User user;
+	private User support;
+
+	private List<Comment> comments;
+
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 }

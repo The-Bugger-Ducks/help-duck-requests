@@ -1,6 +1,7 @@
-package com.helpduck.helpducktickets.model;
+package com.helpduck.helpducktickets.model.tickets;
 
 import com.helpduck.helpducktickets.controller.TicketController;
+import com.helpduck.helpducktickets.model.LinkAdder;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
 
 import org.springframework.data.domain.Page;
