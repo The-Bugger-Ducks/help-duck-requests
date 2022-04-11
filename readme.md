@@ -1,4 +1,4 @@
-# API
+# API - microsserviço de chamados
 
 Neste guia iremos configurar o ambiente de desenvolvimento, clonando o projeto e instalando suas dependências. Ainda neste guia é possível encontrar uma breve explicação da estrutura das pastas adotada para a construção em equipe desse projeto.
 
