@@ -49,6 +49,13 @@ public class TicketService {
     return ticketHateoas;
   }
 
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllByUserIdService(Pageable pageable, String id) {
+    Page<Ticket> tickets = repository.findAllByUserId(pageable, id);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
   public Ticket create(Ticket ticket) {
     ticket.setComments(new ArrayList<Comment>());
     ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));

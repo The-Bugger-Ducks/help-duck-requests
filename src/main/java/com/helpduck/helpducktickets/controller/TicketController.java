@@ -60,6 +60,17 @@ public class TicketController {
 		return new ResponseEntity<TicketHateoas>(ticketHateoas, HttpStatus.FOUND);
 	}
 
+	@GetMapping("/user/{id}")
+	public ResponseEntity<Page<TicketHateoas>> getTicketByUserId(@PathVariable String id, Pageable pageable) {
+		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Page<TicketHateoas> ticketHateoas = service.findAllByUserIdService(pageable, id);
+		if (ticketHateoas != null) {
+			linkAdder.addLink(ticketHateoas);
+			response = new ResponseEntity<Page<TicketHateoas>>(ticketHateoas, HttpStatus.FOUND);
+		}
+		return response;
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
 
