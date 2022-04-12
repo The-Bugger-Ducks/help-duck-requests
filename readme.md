@@ -41,7 +41,7 @@ Agora o servidor deste projeto está ativo. É só acessar pelo localhost na por
 | :open_file_folder: main/ .../ entity        | Arquivos com funções mais especificas, ex: atualizador, adicionador de links para HATEOAS, etc|
 | :open_file_folder: main/ .../ enums         | Arquivos de padronização de entrada para campos específicos no banco de dados|
 | :open_file_folder: main/ .../ repository    | Arquivo para utilização de CRUD de entidades (collection - mongodb) do projeto|
-| :page_facing_up: main/ .../ HelpDuckTicketsApplication.java | Arquivo principal do projeto|
+| :page_facing_up: main/ .../ HelpDuckTicketsApplication.java | Arquivo principal do projeto| 
 | :open_file_folder: main/ resources/         | Arquivos para configurações globais do projeto (ex: credenciais em banco de dados)|
 | :page_facing_up: docker-compose             | Arquivo usado para "conteinerizar" um banco mongo local|
 | :page_facing_up: pom.xml                    | Arquivo usado gerenciar as dependencias do projeto com o Maven|
