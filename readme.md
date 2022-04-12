@@ -35,7 +35,7 @@ Agora o servidor deste projeto está ativo. É só acessar pelo localhost na por
 
 | Pasta                                        | Definição                                                                                            |
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| :open_file_folder: main/ .../               | Arquivos com o código fonte do projeto|
+| :open_file_folder: main/ .../               | Arquivos com o código fonte do projeto |
 | :open_file_folder: main/ .../ config        | Configuração de cors, csrf, etc|
 | :open_file_folder: main/ .../ controller    | Arquivos com os métodos de requisição das rotas|
 | :open_file_folder: main/ .../ entity        | Arquivos com funções mais especificas, ex: atualizador, adicionador de links para HATEOAS, etc|
