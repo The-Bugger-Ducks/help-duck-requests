@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
@@ -57,6 +58,7 @@ public class TicketService {
   }
 
   public Ticket create(Ticket ticket) {
+    ticket.setStatus(StatusEnum.awaiting)
     ticket.setComments(new ArrayList<Comment>());
     ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
     ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
