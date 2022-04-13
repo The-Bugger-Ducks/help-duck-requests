@@ -3,6 +3,7 @@ package com.helpduck.helpducktickets.controller;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
+import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.model.tickets.TicketLinkAdder;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
 import com.helpduck.helpducktickets.model.tickets.TicketUpdater;
@@ -72,10 +73,10 @@ public class TicketController {
 	}
 
 	@GetMapping("/support/{supportId}")
-	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable, @PathVariable String SupportId) {
+	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(Pageable pageable, @PathVariable String supportId) {
 
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> pageTicketHateoas = service.findAllBySupportIdService(pageable, SupportId);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId);
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
 			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
@@ -83,11 +84,12 @@ public class TicketController {
 		return response;
 	}
 
-	@GetMapping("/withoutReservation")
-	public ResponseEntity<Page<TicketHateoas>> getTicketsWithoutReservation(Pageable pageable) {
+	@GetMapping("/status/{statusToFind}")
+	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(Pageable pageable,
+			@PathVariable StatusEnum statusToFind) {
 
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> pageTicketHateoas = service.findAllNullSupportService(pageable);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllByStatusServce(pageable, statusToFind);
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
 			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);

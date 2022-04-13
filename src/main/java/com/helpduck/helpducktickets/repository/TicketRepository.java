@@ -1,6 +1,7 @@
 package com.helpduck.helpducktickets.repository;
 
 import com.helpduck.helpducktickets.entity.Ticket;
+import com.helpduck.helpducktickets.enums.StatusEnum;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +13,7 @@ public interface TicketRepository extends MongoRepository<Ticket, String> {
   Page<Ticket> findAllByUserId(Pageable pageable, String id);
 
   @Query("{'support.id': ?0}")
-  Page<Ticket> findAllBySupportId(Pageable pageable, String id);
+  Page<Ticket> findAllBySupportById(Pageable pageable, String id);
 
-  @Query("{'support': null}")
-  Page<Ticket> findAllNullSupport(Pageable pageable);
+  Page<Ticket> findAllByStatus(Pageable pageable, StatusEnum status);
 }

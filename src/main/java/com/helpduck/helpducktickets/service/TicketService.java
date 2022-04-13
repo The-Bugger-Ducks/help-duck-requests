@@ -59,14 +59,14 @@ public class TicketService {
 
   @Transactional(readOnly = true)
   public Page<TicketHateoas> findAllBySupportIdService(Pageable pageable, String id) {
-    Page<Ticket> tickets = repository.findAllByUserId(pageable, id);
+    Page<Ticket> tickets = repository.findAllBySupportById(pageable, id);
     Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
     return ticketsHateoas;
   }
 
   @Transactional(readOnly = true)
-  public Page<TicketHateoas> findAllNullSupportService(Pageable pageable) {
-    Page<Ticket> tickets = repository.findAllNullSupport(pageable);
+  public Page<TicketHateoas> findAllByStatusServce(Pageable pageable, StatusEnum status) {
+    Page<Ticket> tickets = repository.findAllByStatus(pageable, status);
     Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
     return ticketsHateoas;
   }
