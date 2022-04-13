@@ -71,6 +71,30 @@ public class TicketController {
 		return response;
 	}
 
+	@GetMapping("/support/{supportId}")
+	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable, @PathVariable String SupportId) {
+
+		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllBySupportIdService(pageable, SupportId);
+		if (!pageTicketHateoas.isEmpty()) {
+			linkAdder.addLink(pageTicketHateoas);
+			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+		}
+		return response;
+	}
+
+	@GetMapping("/withoutReservation")
+	public ResponseEntity<Page<TicketHateoas>> getTicketsWithoutReservation(Pageable pageable) {
+
+		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllNullSupportService(pageable);
+		if (!pageTicketHateoas.isEmpty()) {
+			linkAdder.addLink(pageTicketHateoas);
+			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+		}
+		return response;
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
 

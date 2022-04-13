@@ -57,8 +57,22 @@ public class TicketService {
     return ticketsHateoas;
   }
 
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllBySupportIdService(Pageable pageable, String id) {
+    Page<Ticket> tickets = repository.findAllByUserId(pageable, id);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllNullSupportService(Pageable pageable) {
+    Page<Ticket> tickets = repository.findAllNullSupport(pageable);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
   public Ticket create(Ticket ticket) {
-    ticket.setStatus(StatusEnum.awaiting)
+    ticket.setStatus(StatusEnum.awaiting);
     ticket.setComments(new ArrayList<Comment>());
     ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
     ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
