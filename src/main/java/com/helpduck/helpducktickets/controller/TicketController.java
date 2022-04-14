@@ -39,14 +39,6 @@ public class TicketController {
 
 	MongoTemplate mongoTemplate;
 
-	@GetMapping()
-	public Map<String, Object> statusAPI() {
-
-		Map<String, Object> rtn = new LinkedHashMap<>();
-		rtn.put("message", "Tickets microservice online :]");
-		return rtn;
-	}
-
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
 
