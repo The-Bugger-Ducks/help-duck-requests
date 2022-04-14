@@ -65,7 +65,7 @@ public class TicketService {
   }
 
   @Transactional(readOnly = true)
-  public Page<TicketHateoas> findAllByStatusServce(Pageable pageable, StatusEnum status) {
+  public Page<TicketHateoas> findAllByStatusService(Pageable pageable, StatusEnum status) {
     Page<Ticket> tickets = repository.findAllByStatus(pageable, status);
     Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
     return ticketsHateoas;

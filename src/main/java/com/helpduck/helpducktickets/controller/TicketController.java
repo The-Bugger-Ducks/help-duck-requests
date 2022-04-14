@@ -89,7 +89,7 @@ public class TicketController {
 			@PathVariable StatusEnum statusToFind) {
 
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> pageTicketHateoas = service.findAllByStatusServce(pageable, statusToFind);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllByStatusService(pageable, statusToFind);
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
 			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);

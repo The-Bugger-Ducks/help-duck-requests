@@ -65,4 +65,18 @@ public class HelpUserController {
     repository.save(ticket);
     return new ResponseEntity<Ticket>(HttpStatus.OK);
   }
+
+  @PutMapping("/closeTicket/{ticketId}")
+  public ResponseEntity<Ticket> closeTicketBySupport(@PathVariable String ticketId) {
+
+    Ticket ticketFound = service.findById(ticketId);
+    if (ticketFound == null) {
+      return new ResponseEntity<Ticket>(HttpStatus.NOT_FOUND);
+    }
+
+    ticketFound.setStatus(StatusEnum.done);
+    ticketFound.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    repository.save(ticketFound);
+    return new ResponseEntity<Ticket>(HttpStatus.OK);
+  }
 }
