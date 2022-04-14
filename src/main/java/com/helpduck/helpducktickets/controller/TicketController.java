@@ -1,5 +1,7 @@
 package com.helpduck.helpducktickets.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -36,6 +38,14 @@ public class TicketController {
 	TicketLinkAdder linkAdder;
 
 	MongoTemplate mongoTemplate;
+
+	@GetMapping()
+	public Map<String, Object> statusAPI() {
+
+		Map<String, Object> rtn = new LinkedHashMap<>();
+		rtn.put("message", "Tickets microservice online :]");
+		return rtn;
+	}
 
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
