@@ -15,6 +15,7 @@ import com.helpduck.helpducktickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,7 @@ public class HelpUserController {
   @Autowired
   TicketLinkAdder linkAdder;
 
+  @PreAuthorize("hasRole('support')")
   @PutMapping("/reserveTicket/{ticketId}")
   public ResponseEntity<Ticket> reserveTicketBySupport(@PathVariable String ticketId, @RequestBody User support) {
 
@@ -49,6 +51,7 @@ public class HelpUserController {
     return new ResponseEntity<Ticket>(HttpStatus.OK);
   }
 
+  @PreAuthorize("hasRole('client') or hasRole('support')")
   @PutMapping("/updateComment/{ticketId}")
   public ResponseEntity<Ticket> answerTicketComment(@PathVariable String ticketId, @RequestBody Comment newComment) {
 
@@ -66,6 +69,7 @@ public class HelpUserController {
     return new ResponseEntity<Ticket>(HttpStatus.OK);
   }
 
+  @PreAuthorize("hasRole('support')")
   @PutMapping("/closeTicket/{ticketId}")
   public ResponseEntity<Ticket> closeTicketBySupport(@PathVariable String ticketId) {
 
