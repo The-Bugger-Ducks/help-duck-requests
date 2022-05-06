@@ -89,7 +89,7 @@ public class TicketController {
 		return response;
 	}
 
-	@PreAuthorize("hasRole('client') or hasRole('support')")
+	@PreAuthorize("hasRole('support')")
 	@GetMapping("/status/{statusToFind}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(Pageable pageable,
 			@PathVariable StatusEnum statusToFind) {
@@ -115,7 +115,7 @@ public class TicketController {
 		return new ResponseEntity<Ticket>(ticketInserted, HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('client') or hasRole('support')")
+	@PreAuthorize("hasRole('support')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateTicket(@RequestBody Ticket updatedTicket) {
 
@@ -132,7 +132,7 @@ public class TicketController {
 		return new ResponseEntity<HttpStatus>(status);
 	}
 
-	@PreAuthorize("hasRole('client')")
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@DeleteMapping("/delete/{ticketId}")
 	public ResponseEntity<HttpStatus> deleteTicket(@PathVariable String ticketId) {
 
