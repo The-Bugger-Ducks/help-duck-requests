@@ -1,7 +1,5 @@
 package com.helpduck.helpducktickets.controller;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -18,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +38,7 @@ public class TicketController {
 
 	MongoTemplate mongoTemplate;
 
+	@PreAuthorize("hasRole('support')")
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
 
@@ -51,6 +51,7 @@ public class TicketController {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/{ticketId}")
 	public ResponseEntity<TicketHateoas> getTicket(@PathVariable String ticketId) {
 
@@ -63,6 +64,7 @@ public class TicketController {
 		return new ResponseEntity<TicketHateoas>(ticketHateoas, HttpStatus.FOUND);
 	}
 
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/user/{id}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketByUserId(@PathVariable String id, Pageable pageable) {
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,6 +76,7 @@ public class TicketController {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('support')")
 	@GetMapping("/support/{supportId}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(Pageable pageable, @PathVariable String supportId) {
 
@@ -86,6 +89,7 @@ public class TicketController {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('support')")
 	@GetMapping("/status/{statusToFind}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(Pageable pageable,
 			@PathVariable StatusEnum statusToFind) {
@@ -99,6 +103,7 @@ public class TicketController {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('client')")
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
 
@@ -110,6 +115,7 @@ public class TicketController {
 		return new ResponseEntity<Ticket>(ticketInserted, HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasRole('support')")
 	@PutMapping("/update")
 	public ResponseEntity<HttpStatus> updateTicket(@RequestBody Ticket updatedTicket) {
 
@@ -126,6 +132,7 @@ public class TicketController {
 		return new ResponseEntity<HttpStatus>(status);
 	}
 
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@DeleteMapping("/delete/{ticketId}")
 	public ResponseEntity<HttpStatus> deleteTicket(@PathVariable String ticketId) {
 
