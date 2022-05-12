@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.enums.StatusEnum;
+import com.helpduck.helpducktickets.interfaces.SolutionRequests;
 import com.helpduck.helpducktickets.entity.Comment;
+import com.helpduck.helpducktickets.entity.Solution;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
 import com.helpduck.helpducktickets.repository.TicketRepository;
@@ -17,11 +19,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import feign.FeignException;
+
 @Service
 public class TicketService {
 
   @Autowired
   private TicketRepository repository;
+
+  @Autowired
+  SolutionRequests solutionRequests;
 
   @Transactional(readOnly = true)
   public Page<TicketHateoas> findAll(Pageable pageable) {
@@ -42,11 +49,21 @@ public class TicketService {
 
   @Transactional(readOnly = true)
   public TicketHateoas findByIdHateoas(String id) {
-    Optional<Ticket> ticket = repository.findById(id);
-    if (ticket.isEmpty()) {
+    Optional<Ticket> ticketOptional = repository.findById(id);
+    if (ticketOptional.isEmpty()) {
       return null;
     }
-    TicketHateoas ticketHateoas = new TicketHateoas(ticket.get());
+
+    Ticket ticket = ticketOptional.get();
+
+    try {
+      Solution solutionTicket = solutionRequests.returnSolution(id);
+      ticket.setSolution(solutionTicket);
+    } catch (FeignException.NotFound e) {
+      ticket.setSolution(null);
+    }
+
+    TicketHateoas ticketHateoas = new TicketHateoas(ticket);
     return ticketHateoas;
   }
 
