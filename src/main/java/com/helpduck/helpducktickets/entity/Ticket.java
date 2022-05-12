@@ -20,6 +20,7 @@ public class Ticket {
 	private String title;
 	private String description;
 	private List<String> tags;
+	private Equipment equipment;
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;
 
