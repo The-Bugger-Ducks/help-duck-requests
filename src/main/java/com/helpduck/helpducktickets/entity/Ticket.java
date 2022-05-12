@@ -33,4 +33,5 @@ public class Ticket {
 
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private LocalDateTime concludedAt;
 }

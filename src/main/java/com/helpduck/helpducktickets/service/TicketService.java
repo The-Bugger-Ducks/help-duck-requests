@@ -93,6 +93,7 @@ public class TicketService {
     ticket.setComments(new ArrayList<Comment>());
     ticket.setCreatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
     ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    ticket.setConcludedAt(null);
     Ticket ticketInserted = repository.insert(ticket);
     return ticketInserted;
   }
