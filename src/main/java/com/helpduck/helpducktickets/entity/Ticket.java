@@ -28,6 +28,8 @@ public class Ticket {
 
 	private List<Comment> comments;
 
+	private Solution solution;
+
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 }

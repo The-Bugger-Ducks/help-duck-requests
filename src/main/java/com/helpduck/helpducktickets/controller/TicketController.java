@@ -13,7 +13,6 @@ import com.helpduck.helpducktickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,8 +35,6 @@ public class TicketController {
 	@Autowired
 	TicketLinkAdder linkAdder;
 
-	MongoTemplate mongoTemplate;
-
 	@PreAuthorize("hasRole('support')")
 	@GetMapping("/")
 	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
@@ -57,7 +54,7 @@ public class TicketController {
 
 		TicketHateoas ticketHateoas = service.findByIdHateoas(ticketId);
 		if (ticketHateoas == null) {
-			new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 		linkAdder.addLink(ticketHateoas);
