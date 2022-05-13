@@ -79,7 +79,7 @@ public class HelpUserController {
     }
 
     ticketFound.setStatus(StatusEnum.done);
-    ticketFound.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    ticketFound.setConcludedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
     repository.save(ticketFound);
     return new ResponseEntity<Ticket>(HttpStatus.OK);
   }
