@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Ticket;
@@ -30,28 +31,22 @@ public class TicketService {
     return page;
   }
 
-  //@Transactional(readOnly = true)
- // public Page<TicketHateoas> checkIfIsEmpty(Pageable pageable, StatusEnum value){
-    
-  //}
-
-
   @Transactional(readOnly = true)
-  public Page<TicketHateoas> lowPriorityTickets(Pageable pageable, StatusEnum priority ) {
+  public Page<TicketHateoas> lowPriorityTickets(Pageable pageable, PriorityLevelEnum priority ) {
     Page<Ticket> ticket = repository.filterAllByLowPriority(pageable, priority);
     Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
     return page;
   }
 
   @Transactional(readOnly = true)
-  public Page<TicketHateoas> mediumPriorityTickets(Pageable pageable, StatusEnum priority) {
+  public Page<TicketHateoas> mediumPriorityTickets(Pageable pageable, PriorityLevelEnum priority) {
     Page<Ticket> ticket = repository.filterAllByMediumPriority(pageable, priority);
     Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
     return page;
   }
 
   @Transactional(readOnly = true)
-  public Page<TicketHateoas> highPriorityTickets(Pageable pageable, StatusEnum priority) {
+  public Page<TicketHateoas> highPriorityTickets(Pageable pageable, PriorityLevelEnum priority) {
     Page<Ticket> ticket = repository.filterAllByHighPriority(pageable, priority);
     Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
     return page;
