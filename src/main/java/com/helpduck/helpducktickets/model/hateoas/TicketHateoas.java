@@ -2,6 +2,7 @@ package com.helpduck.helpducktickets.model.hateoas;
 
 import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Equipment;
+
 import com.helpduck.helpducktickets.entity.Solution;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.entity.User;
@@ -36,6 +37,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private LocalDateTime concludedAt;
+
 
 	public TicketHateoas(Ticket ticket) {
 		id = ticket.getId();
