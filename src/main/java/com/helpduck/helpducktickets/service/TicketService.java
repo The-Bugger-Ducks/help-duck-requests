@@ -30,6 +30,55 @@ public class TicketService {
     return page;
   }
 
+  //@Transactional(readOnly = true)
+ // public Page<TicketHateoas> checkIfIsEmpty(Pageable pageable, StatusEnum value){
+    
+  //}
+
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> lowPriorityTickets(Pageable pageable, StatusEnum priority ) {
+    Page<Ticket> ticket = repository.filterAllByLowPriority(pageable, priority);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> mediumPriorityTickets(Pageable pageable, StatusEnum priority) {
+    Page<Ticket> ticket = repository.filterAllByMediumPriority(pageable, priority);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> highPriorityTickets(Pageable pageable, StatusEnum priority) {
+    Page<Ticket> ticket = repository.filterAllByHighPriority(pageable, priority);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> doneStatusTickets(Pageable pageable, StatusEnum status) {
+    Page<Ticket> ticket = repository.filterAllByDoneStatus(pageable, status);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> awaitingStatusTickets(Pageable pageable, StatusEnum status) {
+    Page<Ticket> ticket = repository.filterAllByAwaitingStatus(pageable, status);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> underAnalysisStatusTickets(Pageable pageable, StatusEnum status) {
+    Page<Ticket> ticket = repository.filterAllByUnderAnalysisStatus(pageable, status);
+    Page<TicketHateoas> page = ticket.map(x -> new TicketHateoas(x));
+    return page;
+  }
+    
+
   @Transactional(readOnly = true)
   public Ticket findById(String id) {
     Optional<Ticket> ticketOptional = repository.findById(id);
