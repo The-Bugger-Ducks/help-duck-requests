@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -40,6 +41,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.headers().frameOptions().disable();
 		}
 
+		http.authorizeRequests()
+				.antMatchers("/swagger-ui/**",
+						"/v2/api-docs/**",
+						"/swagger-resources/**",
+						"/swagger-ui.html",
+						"/webjars/**",
+						"/swagger.json")
+				.permitAll();
 		http.cors().and().csrf().disable();
 		http.authorizeRequests().anyRequest().authenticated().and().addFilterBefore(
 				new TokenFilter(
@@ -48,6 +57,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				UsernamePasswordAuthenticationFilter.class);
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring()
+				.antMatchers("/**.html", "/v2/api-docs/**", "/webjars/**", "/configuration/**", "/swagger-resources/**",
+						"swagger-ui/**");
 	}
 
 	@Bean

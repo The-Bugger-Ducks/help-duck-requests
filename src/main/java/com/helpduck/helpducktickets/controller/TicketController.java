@@ -86,7 +86,7 @@ public class TicketController {
 		return response;
 	}
 
-	@PreAuthorize("hasRole('support')")
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/status/{statusToFind}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(Pageable pageable,
 			@PathVariable StatusEnum statusToFind) {
