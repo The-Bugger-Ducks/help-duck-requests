@@ -87,61 +87,73 @@ public class TicketController {
 
 	@GetMapping("/filterStatus/{status}")
 	public ResponseEntity<Page<TicketHateoas>> FilterTicketsByStatus(Pageable pageable, 
-		@PathVariable StatusEnum status){
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
-		if (status.name() == "done"){
-		Page<TicketHateoas> pageTicketHateoas = service.doneStatusTickets(pageable, status);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
-		}
-		
-		if (status.name() == "awaiting"){
-		Page<TicketHateoas> pageTicketHateoas = service.awaitingStatusTickets(pageable, status);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
-		}
-		
-		if (status.name() == "underAnalysis"){
-		Page<TicketHateoas> pageTicketHateoas = service.underAnalysisStatusTickets(pageable, status);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
-		}
-		return response;
+	@PathVariable StatusEnum status){
+	ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	Page<TicketHateoas> pageTicketHateoas;
+		switch(status.toString()){
+
+			case "done":
+			pageTicketHateoas = service.doneStatusTickets(pageable, status);
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}	
+			break;
+			
+			case "awaiting":
+			pageTicketHateoas = service.awaitingStatusTickets(pageable, status);
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}
+			break;
+
+			case "underAnalysis":
+			pageTicketHateoas = service.underAnalysisStatusTickets(pageable, status);	
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}	
+			break;
+		}	
+		return response;	
 	}
 
 	@GetMapping("/filterPriority/{priority}")
 	public ResponseEntity<Page<TicketHateoas>> FilterTicketsByPriority(Pageable pageable, 
 	@PathVariable PriorityLevelEnum priority){
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	Page<TicketHateoas> pageTicketHateoas;
 		
-		if (priority.name() == "low"){
-		Page<TicketHateoas> pageTicketHateoas = service.lowPriorityTickets(pageable, priority);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
+		switch(priority.toString()){
+
+			case "low":
+				pageTicketHateoas = service.lowPriorityTickets(pageable, priority);
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}
+			break;
+			
+			case "medium":
+				pageTicketHateoas = service.mediumPriorityTickets(pageable, priority);
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}
+			break;
+
+			case "high":
+				pageTicketHateoas = service.highPriorityTickets(pageable, priority);
+				if (!pageTicketHateoas.isEmpty()){
+					linkAdder.addLink(pageTicketHateoas);
+					response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+				}	
+			break;
 		}
-		
-		if (priority.name() == "medium"){
-		Page<TicketHateoas> pageTicketHateoas = service.mediumPriorityTickets(pageable, priority);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
-			}
-		
-		if (priority.name() == "high"){
-		Page<TicketHateoas> pageTicketHateoas = service.highPriorityTickets(pageable, priority);
-		if (!pageTicketHateoas.isEmpty()){
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);}
-			}
-		return response;
+	return response;
 	}
-
-
+	
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
 
