@@ -32,10 +32,10 @@ Para prosseguir, é preciso que todas as ferramentas necessárias estejam devida
 
 ```bash
 # Baixe este repositório ou clone pelo Git usando o comando:
-$ git clone https://github.com/The-Bugger-Ducks/help-duck-requests.git
+$ git clone https://github.com/The-Bugger-Ducks/help-duck-tickets.git
 
 # Acesse a pasta do projeto
-$ cd help-duck-requests
+$ cd help-duck-tickets
 
 # Espere o Maven carregar as dependências do projeto (são listadas no arquivo pom.xml)
 
@@ -53,7 +53,7 @@ O servidor inciará localmente na porta 8081. Use o Insomnia para simular requis
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/{ticketId}`                | Dados de um chamado específico  |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/user/{userId}`             | Chamados de um usuário comum específico |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/support/{userId}`          | Chamados de um usuário suporte específico |
-|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/status/{statusToFind}`     | Chamados com um status específico  |
+|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/status/{statusToFind}`     | Chamados com um status específico |
 |   [![](https://img.shields.io/badge/POST-4682B4?style=for-the-badge)]() | `/tickets/create`                    | Cadastro de chamados            |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/tickets/update`                    | Alteração dos dados do chamado  |
 | [![](https://img.shields.io/badge/DELETE-CD853F?style=for-the-badge)]() | `/tickets/delete/{ticketId}`         | Exclusão de chamados            |
@@ -66,8 +66,8 @@ O servidor inciará localmente na porta 8081. Use o Insomnia para simular requis
 
 ### Explicação da estrutura das pastas
 
-| Pasta                                                       | Definição                                                                                      |
-| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Pasta                                                       | Definição                                                                       |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | :open_file_folder: main/ .../                               | Arquivos com o código fonte do projeto                                          |
 | :open_file_folder: main/ .../ config                        | Configuração de cors, csrf, etc                                                 |
 | :open_file_folder: main/ .../ controller                    | Arquivos com os métodos de requisição das rotas                                 |
