@@ -13,6 +13,8 @@ import com.helpduck.helpducktickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,17 +37,23 @@ public class TicketController {
 	@Autowired
 	TicketLinkAdder linkAdder;
 
-	@PreAuthorize("hasRole('support')")
-	@GetMapping("/")
-	public ResponseEntity<Page<TicketHateoas>> getTickets(Pageable pageable) {
+	ResponseEntity<Page<TicketHateoas>> responseTicketHateoas = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> pageTicketHateoas = service.findAll(pageable);
+	public void updateResponseTicketHateoas(Page<TicketHateoas> pageTicketHateoas) {
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+			responseTicketHateoas = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
 		}
-		return response;
+	}
+
+	@PreAuthorize("hasRole('support')")
+	@GetMapping("/")
+	public ResponseEntity<Page<TicketHateoas>> getTickets(
+			@PageableDefault(sort = { "priorityLevel", "createdAt" }, direction = Direction.ASC) Pageable pageable) {
+
+		Page<TicketHateoas> pageTicketHateoas = service.findAll(pageable);
+		updateResponseTicketHateoas(pageTicketHateoas);
+		return responseTicketHateoas;
 	}
 
 	@PreAuthorize("hasRole('client') or hasRole('support')")
@@ -63,41 +71,32 @@ public class TicketController {
 
 	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/user/{id}")
-	public ResponseEntity<Page<TicketHateoas>> getTicketByUserId(@PathVariable String id, Pageable pageable) {
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> ticketHateoas = service.findAllByUserIdService(pageable, id);
-		if (ticketHateoas != null) {
-			linkAdder.addLink(ticketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(ticketHateoas, HttpStatus.FOUND);
-		}
-		return response;
+	public ResponseEntity<Page<TicketHateoas>> getTicketByUserId(@PathVariable String id,
+			@PageableDefault(sort = "createdAt", direction = Direction.ASC) Pageable pageable) {
+
+		Page<TicketHateoas> pageTicketHateoas = service.findAllByUserIdService(pageable, id);
+		updateResponseTicketHateoas(pageTicketHateoas);
+		return responseTicketHateoas;
 	}
 
 	@PreAuthorize("hasRole('support')")
 	@GetMapping("/support/{supportId}")
-	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(Pageable pageable, @PathVariable String supportId) {
+	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(@PathVariable String supportId,
+			@PageableDefault(sort = { "priorityLevel", "createdAt" }, direction = Direction.ASC) Pageable pageable) {
 
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		Page<TicketHateoas> pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId);
-		if (!pageTicketHateoas.isEmpty()) {
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
-		}
-		return response;
+		updateResponseTicketHateoas(pageTicketHateoas);
+		return responseTicketHateoas;
 	}
 
 	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/status/{statusToFind}")
-	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(Pageable pageable,
-			@PathVariable StatusEnum statusToFind) {
+	public ResponseEntity<Page<TicketHateoas>> getTicketsByStatus(@PathVariable StatusEnum statusToFind,
+			@PageableDefault(sort = { "priorityLevel", "createdAt" }, direction = Direction.ASC) Pageable pageable) {
 
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		Page<TicketHateoas> pageTicketHateoas = service.findAllByStatusService(pageable, statusToFind);
-		if (!pageTicketHateoas.isEmpty()) {
-			linkAdder.addLink(pageTicketHateoas);
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
-		}
-		return response;
+		updateResponseTicketHateoas(pageTicketHateoas);
+		return responseTicketHateoas;
 	}
 
 	@PreAuthorize("hasRole('client')")
@@ -107,7 +106,6 @@ public class TicketController {
 		if (ticket.getId() != null) {
 			return new ResponseEntity<Ticket>(HttpStatus.CONFLICT);
 		}
-
 		Ticket ticketInserted = service.create(ticket);
 		return new ResponseEntity<Ticket>(ticketInserted, HttpStatus.CREATED);
 	}
