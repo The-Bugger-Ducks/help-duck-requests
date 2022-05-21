@@ -17,8 +17,16 @@ public class TicketUpdater {
 		if (!verifier.verify(updatedTicket.getDescription())) {
 			ticket.setDescription(updatedTicket.getDescription());
 		}
-		
-		
+
+		ticket.setPriorityLevel(updatedTicket.getPriorityLevel());
+		ticket.setEquipment(updatedTicket.getEquipment());
+		ticket.setUser(updatedTicket.getUser());
+		ticket.setSupport(updatedTicket.getSupport());
+		ticket.setTags(updatedTicket.getTags());
+		ticket.setConcludedAt(updatedTicket.getConcludedAt());
+		ticket.setStatus(updatedTicket.getStatus());
+		ticket.setComments(updatedTicket.getComments());
+
 		ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 	}
 }
