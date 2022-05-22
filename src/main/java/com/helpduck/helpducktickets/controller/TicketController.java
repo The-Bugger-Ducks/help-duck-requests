@@ -43,6 +43,8 @@ public class TicketController {
 		if (!pageTicketHateoas.isEmpty()) {
 			linkAdder.addLink(pageTicketHateoas);
 			responseTicketHateoas = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+		} else {
+			responseTicketHateoas = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
