@@ -32,10 +32,10 @@ Para prosseguir, é preciso que todas as ferramentas necessárias estejam devida
 
 ```bash
 # Baixe este repositório ou clone pelo Git usando o comando:
-$ git clone https://github.com/The-Bugger-Ducks/help-duck-requests.git
+$ git clone https://github.com/The-Bugger-Ducks/help-duck-tickets.git
 
 # Acesse a pasta do projeto
-$ cd help-duck-requests
+$ cd help-duck-tickets
 
 # Espere o Maven carregar as dependências do projeto (são listadas no arquivo pom.xml)
 
@@ -51,27 +51,34 @@ O servidor inciará localmente na porta 8081. Use o Insomnia para simular requis
 | ----------------------------------------------------------------------: | :----------------------------------- | :------------------------------ |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/`                          | Listagem de chamados            |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/{ticketId}`                | Dados de um chamado específico  |
+|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/user/{userId}`             | Chamados de um usuário comum específico |
+|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/support/{userId}`          | Chamados de um usuário suporte específico |
+|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/status/{statusToFind}`     | Chamados com um status específico |
 |   [![](https://img.shields.io/badge/POST-4682B4?style=for-the-badge)]() | `/tickets/create`                    | Cadastro de chamados            |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/tickets/update`                    | Alteração dos dados do chamado  |
 | [![](https://img.shields.io/badge/DELETE-CD853F?style=for-the-badge)]() | `/tickets/delete/{ticketId}`         | Exclusão de chamados            |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/reserveTicket/{ticketId}` | Reserva de chamados             |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/updateComment/{ticketId}` | Adição de comentário no chamado |
+|    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/closeTicket/{ticketId}`   | Fechamento de chamado por um usuário suporte |
 
 
 </div>
 
 ### Explicação da estrutura das pastas
 
-| Pasta                                                       | Definição                                                                                      |
-| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| :open_file_folder: main/ .../                               | Arquivos com o código fonte do projeto                                                         |
-| :open_file_folder: main/ .../ config                        | Configuração de cors, csrf, etc                                                                |
-| :open_file_folder: main/ .../ controller                    | Arquivos com os métodos de requisição das rotas                                                |
+| Pasta                                                       | Definição                                                                       |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| :open_file_folder: main/ .../                               | Arquivos com o código fonte do projeto                                          |
+| :open_file_folder: main/ .../ config                        | Configuração de cors, csrf, etc                                                 |
+| :open_file_folder: main/ .../ controller                    | Arquivos com os métodos de requisição das rotas                                 |
 | :open_file_folder: main/ .../ entity                        | Arquivos com funções mais especificas, ex: atualizador, adicionador de links para HATEOAS, etc |
-| :open_file_folder: main/ .../ enums                         | Arquivos de padronização de entrada para campos específicos no banco de dados                  |
-| :open_file_folder: main/ .../ repository                    | Arquivo para utilização de CRUD de entidades (collection - mongodb) do projeto                 |
-| :page_facing_up: main/ .../ HelpDuckTicketsApplication.java | Arquivo principal do projeto                                                                   |
-| :open_file_folder: main/ resources/                         | Arquivos para configurações globais do projeto (ex: credenciais em banco de dados)             |
-| :page_facing_up: docker-compose                             | Arquivo usado para "conteinerizar" um banco mongo local                                        |
-| :page_facing_up: pom.xml                                    | Arquivo usado gerenciar as dependencias do projeto com o Maven                                 |
+| :open_file_folder: main/ .../ enums                         | Arquivos de padronização de entrada para campos específicos no banco de dados   |
+| :open_file_folder: main/ .../ interfaces                         | Arquivos que constam as interfaces criadas e utilizadas no projeto         |
+| :open_file_folder: main/ .../ model                         | Arquivos que fazem a aplicação de HATEOAS e manipulação de dados                |
+| :open_file_folder: main/ .../ repository                    | Arquivos para utilização de CRUD de entidades (collection - mongodb) do projeto |
+| :open_file_folder: main/ .../ service                       | Arquivos que contém os serviços utilizados no projeto                           |
+| :page_facing_up: main/ .../ HelpDuckTicketsApplication.java | Arquivo principal do projeto                                                    |
+| :open_file_folder: main/ resources/                         | Arquivos para configurações globais do projeto (ex: credenciais em banco de dados)|
+| :page_facing_up: docker-compose                             | Arquivo usado para "conteinerizar" um banco mongo local                         |
+| :page_facing_up: pom.xml                                    | Arquivo usado gerenciar as dependencias do projeto com o Maven                  |
 
