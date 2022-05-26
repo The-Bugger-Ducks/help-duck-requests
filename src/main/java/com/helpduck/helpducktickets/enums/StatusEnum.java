@@ -1,5 +1,7 @@
 package com.helpduck.helpducktickets.enums;
 
 public enum StatusEnum {
-  awaiting, underAnalysis, done;
+  awaiting,
+  underAnalysis,
+  done;
 }

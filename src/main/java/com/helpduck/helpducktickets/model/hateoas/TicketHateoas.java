@@ -38,7 +38,6 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private LocalDateTime updatedAt;
 	private LocalDateTime concludedAt;
 
-
 	public TicketHateoas(Ticket ticket) {
 		id = ticket.getId();
 		title = ticket.getTitle();
@@ -53,6 +52,6 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 		solution = ticket.getSolution();
 		createdAt = ticket.getCreatedAt();
 		updatedAt = ticket.getUpdatedAt();
-		concludedAt = ticket.getCreatedAt();
+		concludedAt = ticket.getConcludedAt();
 	}
 }
