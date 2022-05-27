@@ -75,7 +75,8 @@ public class TicketController {
 
 	@PreAuthorize("hasRole('support')")
 	@GetMapping("/support/{supportId}")
-	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(Pageable pageable, @PathVariable String supportId) {
+	public ResponseEntity<Page<TicketHateoas>> getTicketsBySupportId(Pageable pageable,
+			@PathVariable String supportId) {
 
 		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		Page<TicketHateoas> pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId);
@@ -142,4 +143,20 @@ public class TicketController {
 		}
 		return new ResponseEntity<HttpStatus>(status);
 	}
+
+	@GetMapping("/search/{ticketTitle}")
+	public ResponseEntity<Page<TicketHateoas>> getTicketsByTitle(Pageable pageable, @PathVariable String ticketTitle) {
+		
+		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		Page<TicketHateoas> pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle);
+
+		if(!pageTicketHateoas.isEmpty()){
+			linkAdder.addLink((pageTicketHateoas));
+			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+		}
+		
+		return response;
+
+	}
+
 }
