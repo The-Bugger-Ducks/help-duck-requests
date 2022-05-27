@@ -21,5 +21,5 @@ public class User {
   private String password;
 
   private RoleEnum role;
-  private RequestingDepartmentEnum requestingDepartmentEnum;
+  private RequestingDepartmentEnum requestingDepartment;
 }
