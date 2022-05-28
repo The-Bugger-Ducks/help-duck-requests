@@ -1,6 +1,6 @@
 package com.helpduck.helpducktickets.entity;
 
-import com.helpduck.helpducktickets.enums.RequestingDepartmentEnum;
+import com.helpduck.helpducktickets.enums.DepartmentEnum;
 import com.helpduck.helpducktickets.enums.RoleEnum;
 
 import org.springframework.data.annotation.Id;
@@ -21,5 +21,5 @@ public class User {
   private String password;
 
   private RoleEnum role;
-  private RequestingDepartmentEnum requestingDepartment;
+  private DepartmentEnum Department;
 }
