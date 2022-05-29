@@ -16,7 +16,8 @@ public interface TicketRepository extends MongoRepository<Ticket, String> {
   Page<Ticket> findAllBySupportById(Pageable pageable, String id);
 
   Page<Ticket> findAllByStatus(Pageable pageable, StatusEnum status);
-  
-  @Query("{'ticket.title': {$regex: ?0 }})")
+
+  // @Query("{'ticket.title': {$regex: ?0 }})")
+  @Query("{'title': {$regex: ?0, '$options' : 'i'}})")
   Page<Ticket> findAllByTitle(Pageable pageable, String title);
 }
