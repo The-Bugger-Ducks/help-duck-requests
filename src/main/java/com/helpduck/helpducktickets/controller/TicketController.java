@@ -143,6 +143,7 @@ public class TicketController {
 		return new ResponseEntity<HttpStatus>(status);
 	}
 
+	@PreAuthorize("hasRole('client') or hasRole('support')")
 	@GetMapping("/search/{ticketTitle}")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsByTitle(Pageable pageable, @PathVariable String ticketTitle) {
 
