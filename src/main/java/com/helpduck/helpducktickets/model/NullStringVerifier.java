@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Equipment;
+import com.helpduck.helpducktickets.entity.Problem;
 import com.helpduck.helpducktickets.entity.User;
 import com.helpduck.helpducktickets.enums.DepartmentEnum;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
@@ -81,6 +82,14 @@ public class NullStringVerifier {
 	public boolean verify(DepartmentEnum department) {
 		boolean isNull = true;
 		if (!(department == null)) {
+			isNull = false;
+		}
+		return isNull;
+	}
+
+	public boolean verify(Problem problem) {
+		boolean isNull = true;
+		if (!(problem == null)) {
 			isNull = false;
 		}
 		return isNull;
