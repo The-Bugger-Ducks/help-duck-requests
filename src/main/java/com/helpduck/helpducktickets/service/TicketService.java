@@ -88,6 +88,13 @@ public class TicketService {
     return ticketsHateoas;
   }
 
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllByTicketTitle(Pageable pageable, String title) {
+    Page<Ticket> tickets = repository.findAllByTitle(pageable, title);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
   public Ticket create(Ticket ticket) {
     ticket.setStatus(StatusEnum.awaiting);
     ticket.setComments(new ArrayList<Comment>());
