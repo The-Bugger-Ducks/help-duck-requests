@@ -3,6 +3,7 @@ package com.helpduck.helpducktickets.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.helpduck.helpducktickets.enums.DepartmentEnum;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 
@@ -25,6 +26,7 @@ public class Ticket {
 	private PriorityLevelEnum priorityLevel;
 
 	private StatusEnum status;
+	private DepartmentEnum department;
 
 	private User user;
 	private User support;

@@ -42,6 +42,10 @@ public class TicketUpdater {
 			ticket.setTags(updatedTicket.getTags());
 		}
 
+		if (!verifier.verify(updatedTicket.getDepartment())) {
+			ticket.setDepartment(updatedTicket.getDepartment());
+		}
+
 		ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 	}
 }
