@@ -17,8 +17,31 @@ public class TicketUpdater {
 		if (!verifier.verify(updatedTicket.getDescription())) {
 			ticket.setDescription(updatedTicket.getDescription());
 		}
-		
-		
+
+		if (!verifier.verify(updatedTicket.getPriorityLevel())) {
+			ticket.setPriorityLevel(updatedTicket.getPriorityLevel());
+		}
+
+		if (!verifier.verify(updatedTicket.getStatus())) {
+			ticket.setStatus(updatedTicket.getStatus());
+		}
+
+		if (!verifier.verify(updatedTicket.getEquipment())) {
+			ticket.setEquipment(updatedTicket.getEquipment());
+		}
+
+		if (!verifier.verify(updatedTicket.getUser())) {
+			ticket.setUser(updatedTicket.getUser());
+		}
+
+		if (!verifier.verify(updatedTicket.getSupport())) {
+			ticket.setSupport(updatedTicket.getSupport());
+		}
+
+		if (!verifier.verify(updatedTicket.getTags())) {
+			ticket.setTags(updatedTicket.getTags());
+		}
+
 		ticket.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 	}
 }
