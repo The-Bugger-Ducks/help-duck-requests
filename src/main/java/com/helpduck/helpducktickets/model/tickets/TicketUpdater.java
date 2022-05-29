@@ -38,8 +38,8 @@ public class TicketUpdater {
 			ticket.setSupport(updatedTicket.getSupport());
 		}
 
-		if (!verifier.verify(updatedTicket.getTags())) {
-			ticket.setTags(updatedTicket.getTags());
+		if (!verifier.verify(updatedTicket.getProblem())) {
+			ticket.setProblem((updatedTicket.getProblem()));
 		}
 
 		if (!verifier.verify(updatedTicket.getDepartment())) {

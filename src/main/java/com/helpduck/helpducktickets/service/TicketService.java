@@ -61,6 +61,8 @@ public class TicketService {
       ticket.setSolution(solutionTicket);
     } catch (FeignException.NotFound e) {
       ticket.setSolution(null);
+    } catch (FeignException e) {
+      ticket.setSolution(null);
     }
 
     TicketHateoas ticketHateoas = new TicketHateoas(ticket);

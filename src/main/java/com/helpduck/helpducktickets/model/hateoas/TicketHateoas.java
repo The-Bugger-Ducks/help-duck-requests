@@ -2,7 +2,7 @@ package com.helpduck.helpducktickets.model.hateoas;
 
 import com.helpduck.helpducktickets.entity.Comment;
 import com.helpduck.helpducktickets.entity.Equipment;
-
+import com.helpduck.helpducktickets.entity.Problem;
 import com.helpduck.helpducktickets.entity.Solution;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.entity.User;
@@ -28,7 +28,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private String description;
 	private User user;
 	private User support;
-	private List<String> tags;
+	private Problem problem;
 	private Equipment equipment;
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;
@@ -44,7 +44,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 		description = ticket.getDescription();
 		user = ticket.getUser();
 		support = ticket.getSupport();
-		tags = ticket.getTags();
+		problem = ticket.getProblem();
 		equipment = ticket.getEquipment();
 		priorityLevel = ticket.getPriorityLevel();
 		status = ticket.getStatus();
