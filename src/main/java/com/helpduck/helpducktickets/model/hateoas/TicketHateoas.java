@@ -6,6 +6,7 @@ import com.helpduck.helpducktickets.entity.Problem;
 import com.helpduck.helpducktickets.entity.Solution;
 import com.helpduck.helpducktickets.entity.Ticket;
 import com.helpduck.helpducktickets.entity.User;
+import com.helpduck.helpducktickets.enums.DepartmentEnum;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 
@@ -32,6 +33,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private Equipment equipment;
 	private PriorityLevelEnum priorityLevel;
 	private StatusEnum status;
+	private DepartmentEnum department;
 	private List<Comment> comments;
 	private Solution solution;
 	private LocalDateTime createdAt;
@@ -48,6 +50,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 		equipment = ticket.getEquipment();
 		priorityLevel = ticket.getPriorityLevel();
 		status = ticket.getStatus();
+		department = ticket.getDepartment();
 		comments = ticket.getComments();
 		solution = ticket.getSolution();
 		createdAt = ticket.getCreatedAt();
