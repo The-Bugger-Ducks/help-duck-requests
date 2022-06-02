@@ -36,6 +36,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 	private DepartmentEnum department;
 	private List<Comment> comments;
 	private Solution solution;
+	private LocalDateTime reservedAt;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private LocalDateTime concludedAt;
@@ -53,6 +54,7 @@ public class TicketHateoas extends RepresentationModel<TicketHateoas> {
 		department = ticket.getDepartment();
 		comments = ticket.getComments();
 		solution = ticket.getSolution();
+		reservedAt = ticket.getReservedAt();
 		createdAt = ticket.getCreatedAt();
 		updatedAt = ticket.getUpdatedAt();
 		concludedAt = ticket.getConcludedAt();
