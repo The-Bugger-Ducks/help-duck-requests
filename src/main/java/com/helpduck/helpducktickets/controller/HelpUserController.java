@@ -46,7 +46,7 @@ public class HelpUserController {
 
     ticketFound.setSupport(support);
     ticketFound.setStatus(StatusEnum.underAnalysis);
-    ticketFound.setUpdatedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+    ticketFound.setReservedAt(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
     repository.save(ticketFound);
     return new ResponseEntity<Ticket>(HttpStatus.OK);
   }

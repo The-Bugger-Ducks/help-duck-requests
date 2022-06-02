@@ -37,6 +37,7 @@ public class Ticket {
 
 	private Solution solution;
 
+	private LocalDateTime reservedAt;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private LocalDateTime concludedAt;
