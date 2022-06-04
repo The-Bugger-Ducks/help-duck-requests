@@ -167,8 +167,10 @@ public class TicketController {
 			pageTicketHateoas = service.findAllByTitleAndPriorityLevel(pageable, ticketTitle.get(), priority.get());
 		} else if (clientId.isPresent()) {
 			pageTicketHateoas = service.findAllByUserIdService(pageable, clientId.get());
-		} else {
+		} else if (supportId.isPresent()) {
 			pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId.get());
+		} else {
+			pageTicketHateoas = service.findAll(pageable);
 		}
 
 		if (pageTicketHateoas.isEmpty()) {
