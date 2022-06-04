@@ -3,6 +3,7 @@ package com.helpduck.helpducktickets.controller;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
+import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.model.tickets.TicketLinkAdder;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -144,19 +146,30 @@ public class TicketController {
 	}
 
 	@PreAuthorize("hasRole('client') or hasRole('support')")
-	@GetMapping("/search/{ticketTitle}")
-	public ResponseEntity<Page<TicketHateoas>> getTicketsByTitle(Pageable pageable, @PathVariable String ticketTitle) {
+	@GetMapping("/search")
+	public ResponseEntity<Page<TicketHateoas>> getTicketsByTitle(Pageable pageable,
+			@RequestParam Optional<String> ticketTitle, @RequestParam Optional<String> supportId,
+			@RequestParam Optional<String> clientId, @RequestParam Optional<StatusEnum> status,
+			@RequestParam Optional<PriorityLevelEnum> priority) {
 
-		ResponseEntity<Page<TicketHateoas>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		Page<TicketHateoas> pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle);
+		Page<TicketHateoas> pageTicketHateoas;
 
-		if (!pageTicketHateoas.isEmpty()) {
-			linkAdder.addLink((pageTicketHateoas));
-			response = new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
+		if (ticketTitle.isPresent() && clientId.isPresent()) {
+			pageTicketHateoas = service.findAllByTitleAndClientId(pageable, ticketTitle.get(), clientId.get());
+		} else if (ticketTitle.isPresent() && supportId.isPresent()) {
+			pageTicketHateoas = service.findAllByTitleAndSupportId(pageable, ticketTitle.get(), supportId.get());
+		} else if (ticketTitle.isPresent() && status.isPresent()) {
+			pageTicketHateoas = service.findAllByTitleAndFilterByStatus(pageable, ticketTitle.get(), status.get());
+		} else {
+			pageTicketHateoas = service.findAllByTitleAndPriorityLevel(pageable, ticketTitle.get(), priority.get());
 		}
 
-		return response;
+		if (pageTicketHateoas.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
+		linkAdder.addLink((pageTicketHateoas));
+		return new ResponseEntity<Page<TicketHateoas>>(pageTicketHateoas, HttpStatus.FOUND);
 	}
 
 }
