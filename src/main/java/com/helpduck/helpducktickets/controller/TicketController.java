@@ -163,8 +163,12 @@ public class TicketController {
 		} else if (ticketTitle.isPresent() && !status.isPresent() && !priority.isPresent() && !clientId.isPresent()
 				&& !supportId.isPresent()) {
 			pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle.get());
-		} else {
+		} else if (ticketTitle.isPresent() && priority.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndPriorityLevel(pageable, ticketTitle.get(), priority.get());
+		} else if (clientId.isPresent()) {
+			pageTicketHateoas = service.findAllByUserIdService(pageable, clientId.get());
+		} else {
+			pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId.get());
 		}
 
 		if (pageTicketHateoas.isEmpty()) {
