@@ -160,6 +160,9 @@ public class TicketController {
 			pageTicketHateoas = service.findAllByTitleAndSupportId(pageable, ticketTitle.get(), supportId.get());
 		} else if (ticketTitle.isPresent() && status.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndFilterByStatus(pageable, ticketTitle.get(), status.get());
+		} else if (ticketTitle.isPresent() && !status.isPresent() && !priority.isPresent() && !clientId.isPresent()
+				&& !supportId.isPresent()) {
+			pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle.get());
 		} else {
 			pageTicketHateoas = service.findAllByTitleAndPriorityLevel(pageable, ticketTitle.get(), priority.get());
 		}
