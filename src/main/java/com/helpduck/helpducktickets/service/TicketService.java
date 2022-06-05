@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.interfaces.SolutionRequests;
 import com.helpduck.helpducktickets.entity.Comment;
@@ -115,14 +114,6 @@ public class TicketService {
   @Transactional(readOnly = true)
   public Page<TicketHateoas> findAllByTitleAndFilterByStatus(Pageable pageable, String title, StatusEnum status) {
     Page<Ticket> tickets = repository.findAllByTitleAndFilterByStatus(pageable, title, status);
-    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
-    return ticketsHateoas;
-  }
-
-  @Transactional(readOnly = true)
-  public Page<TicketHateoas> findAllByTitleAndPriorityLevel(Pageable pageable, String title,
-      PriorityLevelEnum priority) {
-    Page<Ticket> tickets = repository.findAllByTitleAndPriorityLevel(pageable, title, priority);
     Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
     return ticketsHateoas;
   }

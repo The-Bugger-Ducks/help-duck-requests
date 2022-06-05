@@ -3,7 +3,6 @@ package com.helpduck.helpducktickets.controller;
 import java.util.Optional;
 
 import com.helpduck.helpducktickets.entity.Ticket;
-import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
 import com.helpduck.helpducktickets.model.tickets.TicketLinkAdder;
 import com.helpduck.helpducktickets.model.hateoas.TicketHateoas;
@@ -149,8 +148,7 @@ public class TicketController {
 	@GetMapping("/search")
 	public ResponseEntity<Page<TicketHateoas>> getTicketsByTitle(Pageable pageable,
 			@RequestParam Optional<String> ticketTitle, @RequestParam Optional<String> supportId,
-			@RequestParam Optional<String> clientId, @RequestParam Optional<StatusEnum> status,
-			@RequestParam Optional<PriorityLevelEnum> priority) {
+			@RequestParam Optional<String> clientId, @RequestParam Optional<StatusEnum> status) {
 
 		Page<TicketHateoas> pageTicketHateoas;
 
@@ -160,13 +158,11 @@ public class TicketController {
 			pageTicketHateoas = service.findAllByTitleAndSupportId(pageable, ticketTitle.get(), supportId.get());
 		} else if (ticketTitle.isPresent() && status.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndFilterByStatus(pageable, ticketTitle.get(), status.get());
-		} else if (ticketTitle.isPresent() && !status.isPresent() && !priority.isPresent() && !clientId.isPresent()
-				&& !supportId.isPresent()) {
+		} else if (ticketTitle.isPresent() && !status.isPresent() && !clientId.isPresent() && !supportId.isPresent()) {
 			pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle.get());
-		} else if (ticketTitle.isPresent() && priority.isPresent()) {
-			pageTicketHateoas = service.findAllByTitleAndPriorityLevel(pageable, ticketTitle.get(), priority.get());
 		} else if (clientId.isPresent()) {
 			pageTicketHateoas = service.findAllByUserIdService(pageable, clientId.get());
+			System.out.println("testou ta testado3");
 		} else if (supportId.isPresent()) {
 			pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId.get());
 		} else if (status.isPresent()) {
