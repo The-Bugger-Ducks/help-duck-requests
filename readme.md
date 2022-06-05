@@ -49,6 +49,7 @@ O servidor inciará localmente na porta 8081. Use o Insomnia para simular requis
   
 |                                                                    Tipo | Rota                                 | Ação                            |
 | ----------------------------------------------------------------------: | :----------------------------------- | :------------------------------ |
+|   <hr>                                                                  | <hr>                                 | **Controle de chamados**        |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/`                          | Listagem de chamados            |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/{ticketId}`                | Dados de um chamado específico  |
 |    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/user/{userId}`             | Chamados de um usuário comum específico |
@@ -57,10 +58,11 @@ O servidor inciará localmente na porta 8081. Use o Insomnia para simular requis
 |   [![](https://img.shields.io/badge/POST-4682B4?style=for-the-badge)]() | `/tickets/create`                    | Cadastro de chamados            |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/tickets/update`                    | Alteração dos dados do chamado  |
 | [![](https://img.shields.io/badge/DELETE-CD853F?style=for-the-badge)]() | `/tickets/delete/{ticketId}`         | Exclusão de chamados            |
+|    [![](https://img.shields.io/badge/GET-2E8B57?style=for-the-badge)]() | `/tickets/search`                    | Busca de chamados por título e/ou suporte e/ou cliente e/ou status |
+|   <hr>                                                                  | <hr>                                 | **Controle de ações do usuário**|
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/reserveTicket/{ticketId}` | Reserva de chamados             |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/updateComment/{ticketId}` | Adição de comentário no chamado |
 |    [![](https://img.shields.io/badge/PUT-9370DB?style=for-the-badge)]() | `/helpUser/closeTicket/{ticketId}`   | Fechamento de chamado por um usuário suporte |
-
 
 </div>
 
