@@ -27,6 +27,12 @@ public interface TicketRepository extends MongoRepository<Ticket, String> {
   @Query("{$and: [{'title': { $regex:?0, '$options' : 'i' }}, {'support.id': ?1 }] }")
   Page<Ticket> findAllByTitleAndSupportId(Pageable pageable, String title, String supportId);
 
+  @Query("{$and: [{'status': ?0 }, {'support.id': ?1 }] }")
+  Page<Ticket> findAllByStatusAndSupportId(Pageable pageable, StatusEnum status, String supportId);
+
+  @Query("{$and: [{'status': ?0 }, {'user.id': ?1 }] }")
+  Page<Ticket> findAllByStatusAndClientId(Pageable pageable, StatusEnum status, String clientId);
+
   @Query("{$and: [{'title': { $regex:?0, '$options' : 'i' }}, {'status': ?1 }] }")
   Page<Ticket> findAllByTitleAndFilterByStatus(Pageable pageable, String title, StatusEnum status);
 }

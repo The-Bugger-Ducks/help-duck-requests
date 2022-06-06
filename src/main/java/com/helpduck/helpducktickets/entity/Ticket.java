@@ -3,6 +3,9 @@ package com.helpduck.helpducktickets.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.helpduck.helpducktickets.enums.DepartmentEnum;
 import com.helpduck.helpducktickets.enums.PriorityLevelEnum;
 import com.helpduck.helpducktickets.enums.StatusEnum;
@@ -25,9 +28,12 @@ public class Ticket {
 	private Problem problem;
 	private Equipment equipment;
 
+	@Enumerated(EnumType.ORDINAL)
 	private PriorityLevelEnum priorityLevel;
 
+	@Enumerated(EnumType.ORDINAL)
 	private StatusEnum status;
+	@Enumerated(EnumType.ORDINAL)
 	private DepartmentEnum department;
 
 	private User user;

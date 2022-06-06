@@ -112,6 +112,20 @@ public class TicketService {
   }
 
   @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllByStatusAndClientId(Pageable pageable, StatusEnum status, String clientId) {
+    Page<Ticket> tickets = repository.findAllByStatusAndClientId(pageable, status, clientId);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<TicketHateoas> findAllByStatusAndSupportId(Pageable pageable, StatusEnum status, String supportId) {
+    Page<Ticket> tickets = repository.findAllByStatusAndSupportId(pageable, status, supportId);
+    Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));
+    return ticketsHateoas;
+  }
+
+  @Transactional(readOnly = true)
   public Page<TicketHateoas> findAllByTitleAndFilterByStatus(Pageable pageable, String title, StatusEnum status) {
     Page<Ticket> tickets = repository.findAllByTitleAndFilterByStatus(pageable, title, status);
     Page<TicketHateoas> ticketsHateoas = tickets.map(x -> new TicketHateoas(x));

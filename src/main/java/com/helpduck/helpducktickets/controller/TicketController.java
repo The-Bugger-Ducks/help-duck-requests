@@ -152,20 +152,23 @@ public class TicketController {
 
 		Page<TicketHateoas> pageTicketHateoas;
 
-		if (ticketTitle.isPresent() && clientId.isPresent()) {
+		if (ticketTitle.isPresent() && clientId.isPresent() && !status.isPresent() && !supportId.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndClientId(pageable, ticketTitle.get(), clientId.get());
-		} else if (ticketTitle.isPresent() && supportId.isPresent()) {
+		} else if (ticketTitle.isPresent() && supportId.isPresent() && !status.isPresent() && !clientId.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndSupportId(pageable, ticketTitle.get(), supportId.get());
-		} else if (ticketTitle.isPresent() && status.isPresent()) {
+		} else if (ticketTitle.isPresent() && status.isPresent() && !clientId.isPresent() && !supportId.isPresent()) {
 			pageTicketHateoas = service.findAllByTitleAndFilterByStatus(pageable, ticketTitle.get(), status.get());
 		} else if (ticketTitle.isPresent() && !status.isPresent() && !clientId.isPresent() && !supportId.isPresent()) {
 			pageTicketHateoas = service.findAllByTicketTitle(pageable, ticketTitle.get());
-		} else if (clientId.isPresent()) {
+		} else if (status.isPresent() && clientId.isPresent() && !ticketTitle.isPresent() && !supportId.isPresent()) {
+			pageTicketHateoas = service.findAllByStatusAndClientId(pageable, status.get(), clientId.get());
+		} else if (status.isPresent() && clientId.isPresent() && !ticketTitle.isPresent()) {
+			pageTicketHateoas = service.findAllByStatusAndSupportId(pageable, status.get(), supportId.get());
+		} else if (clientId.isPresent() && !supportId.isPresent() && !ticketTitle.isPresent() && !status.isPresent()) {
 			pageTicketHateoas = service.findAllByUserIdService(pageable, clientId.get());
-			System.out.println("testou ta testado3");
-		} else if (supportId.isPresent()) {
+		} else if (supportId.isPresent() && !clientId.isPresent() && !ticketTitle.isPresent() && !status.isPresent()) {
 			pageTicketHateoas = service.findAllBySupportIdService(pageable, supportId.get());
-		} else if (status.isPresent()) {
+		} else if (status.isPresent() && !supportId.isPresent() && !clientId.isPresent() && !ticketTitle.isPresent()) {
 			pageTicketHateoas = service.findAllByStatusService(pageable, status.get());
 		} else {
 			pageTicketHateoas = service.findAll(pageable);
